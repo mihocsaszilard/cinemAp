@@ -20,7 +20,8 @@
   "homepage": "https://github.com/mihocsaszilard/cinemAp#readme",
   "dependencies": {
     "express": "^4.17.1",
-    "lodash": "^4.17.21"
+    "lodash": "^4.17.21",
+    "morgan": "^1.10.0"
   },
   "devDependencies": {
     "eslint": "^7.29.0"
