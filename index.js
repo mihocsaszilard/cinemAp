@@ -1,5 +1,6 @@
 const express = require('express'),
-      morgan = require('morgan');
+      morgan = require('morgan'),
+      path = require('path');
 
 const app = express();
 
@@ -61,11 +62,6 @@ app.use(myLogger);
 app.use(morgan('common'));
 app.use(express.static('public'));
 
-app.use((err, req, res, next) => {
-  console.log(err.stack);
-  res.status(500).send('Something went wrong!');
-});
-
 app.get('/', (req, res) => {
   let responseText = 'Welcome to my app!';
   responseText += '<small><br> Requested at: ' + req.requestTime + '</small>';
@@ -83,9 +79,12 @@ app.get('/movies', (req, res) => {
 });
 
 app.get('/documentation', (req, res) => {
-  let responseText = 'Welcome to my app!';
-  responseText += '<small><br> Requested at: ' + req.requestTime + '</small>';
-  res.send(responseText);
+  res.sendFile(path.join(__dirname, 'public/documentation.html'));
+});
+
+app.use((err, req, res, next) => {
+  console.log(err.stack);
+  res.status(500).send('Something went wrong!');
 });
 
 app.listen(8080, () => {
