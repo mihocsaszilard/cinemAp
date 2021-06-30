@@ -7,12 +7,12 @@ const express = require('express'),
 const app = express();
 
 
-let requestTime = (req, res, next) => {
+const requestTime = (req, res, next) => {
   req.requestTime = Date.now();
   next();
 }
 
-let myLogger = (req, res, next) => {
+const myLogger = (req, res, next) => {
   console.log('Request URL: ' + req.url);
   next();
 }
@@ -139,7 +139,7 @@ let users = [
 ];
 
 app.get('/', (req, res) => {
-  let responseText = 'Welcome to my app!';
+  const responseText = 'Welcome to my app!';
   responseText += '<small><br> Requested at: ' + req.requestTime + '</small>';
   res.send(responseText);
 });
@@ -150,7 +150,7 @@ app.get('/movies', (req, res) => {
 });
 
 app.post('/movies', (req, res) => {
-  let newMovie = req.body;
+  const newMovie = req.body;
 
   if (!newMovie.title) {
     const message = 'Missing title in request body!';
@@ -187,7 +187,7 @@ app.get('/users', (req, res) => {
 });
 
 app.post('/users', (req, res) => {
-  let newUser = req.body;
+  const newUser = req.body;
 
   if (!newUser.username) {
     const message = 'Missing username in request body!';
@@ -200,7 +200,7 @@ app.post('/users', (req, res) => {
 });
 
 app.put('/users/:username', (req, res) => {
-  let user = users.find((user) => { return user.username === req.params.username });
+  const user = users.find((user) => { return user.username === req.params.username });
 
   if (!user) {
     res.status(404).send('User with the name ' + req.params.username + ' was not found.');
@@ -211,7 +211,7 @@ app.put('/users/:username', (req, res) => {
 });
 
 app.delete('/users/:username', (req, res) => {
-  let userToDelete = users.find((userToDelete) => { return userToDelete.username === req.params.username });
+  const userToDelete = users.find((userToDelete) => { return userToDelete.username === req.params.username });
 
   if(userToDelete) {
     users = users.filter((obj) => { return obj.username !== req.params.username });
@@ -228,12 +228,12 @@ app.get('/documentation', (req, res) => {
 
 
 app.get('/secreturl', (req, res) => {
-  let responseText = 'This is a secret url with super top-secret content.';
+  const responseText = 'This is a secret url with super top-secret content.';
   responseText += '<small><br> Requested at: ' + req.requestTime + '</small>';
   res.send(responseText);
 });
 
-//---------------------error handling middleware------------
+//---------------------error handling------------
 app.use((err, req, res, next) => {
   console.log(err.stack);
   res.status(500).send('Something went wrong!');
