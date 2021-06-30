@@ -233,7 +233,7 @@ app.get('/secreturl', (req, res) => {
   res.send(responseText);
 });
 
-//---------------------error handling------------
+//---------------------error handling middleware------------
 app.use((err, req, res, next) => {
   console.log(err.stack);
   res.status(500).send('Something went wrong!');
