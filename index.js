@@ -114,6 +114,27 @@ let users = [
     password: 'password1',
     email: 'peter@google.com',
     birthday: '2000-01-13'
+  },
+  {
+    id: 2,
+    username: 'Ana',
+    password: 'password2',
+    email: 'ana@google.com',
+    birthday: '2001-04-23'
+  },
+  {
+    id: 3,
+    username: 'Petra',
+    password: 'password3',
+    email: 'petra@google.com',
+    birthday: '1998-11-03'
+  },
+  {
+    id: 4,
+    username: 'Alan',
+    password: 'password4',
+    email: 'alan@google.com',
+    birthday: '1985-07-27'
   }
 ];
 
@@ -186,6 +207,17 @@ app.put('/users/:username', (req, res) => {
   } else {
     user.username = req.body.username;
     res.status(201).send('User ' + req.params.username + ' changed her/his name to: ' + user.username);
+  }
+});
+
+app.delete('/users/:username', (req, res) => {
+  let userToDelete = users.find((userToDelete) => { return userToDelete.username === req.params.username });
+
+  if(userToDelete) {
+    users = users.filter((obj) => { return obj.username !== req.params.username });
+    res.status(201).send('User ' + req.params.username + ' was successfully deleted!');
+  } else {
+      res.status(404).send('User with the name ' + req.params.username + ' was not found.');
   }
 });
 
