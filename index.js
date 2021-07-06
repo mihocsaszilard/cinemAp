@@ -2,9 +2,20 @@ const express = require('express'),
   morgan = require('morgan'),
   path = require('path'),
   bodyParser = require('body-parser'),
-  uuid = require('uuid');
+  uuid = require('uuid'),
+  mongoose = require('mongoose'),
+  Models = require('./models.js');
 
 const app = express();
+const Movies = Models.Movie;
+const Users = Models.User;
+const Genres = Models.Genre;
+const Directors = Models.Director;
+
+mongoose.connect('mongodb://localhost:27017/cinemAppDB', {
+  useNewUrlParser: true,
+  useUnifiedTopology: true
+});
 
 
 const requestTime = (req, res, next) => {
@@ -22,121 +33,10 @@ app.use(myLogger);
 app.use(morgan('common'));
 app.use(express.static('public'));
 app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({
+  extended: true
+}));
 
-
-let movies = [
-  {
-    title: 'The Shawshank Redemption',
-    rank: '1',
-    genre: {
-      gname: 'Drama',
-      description: 'A category of narrative fiction (or semi-fiction) intended to be more serious than humorous in tone'
-    },
-    director: {
-      name: 'Frank A. Darabont',
-      bio: ' A Hungarian-American film director, screenwriter and producer',
-      born: '28.02.1959',
-      died: '-'
-    },
-    description: 'This is a movie',
-    imgUrl: 'https://images-na.ssl-images-amazon.com/images/I/519NBNHX5BL._SY445_.jpg'
-  },
-  {
-    title: 'The Godfather',
-    rank: '2',
-    genre: {
-        gname: 'Crime',
-        description: 'A film genre inspired by and analogous to the crime fiction literary genre. Films of this genre generally involve various aspects of crime and its detection'
-    },
-    director: {
-      name: 'Francis Ford Coppola',
-      bio: ' An American film director, producer and screenwriter',
-      born: '07.04.1939',
-      died: '-'
-    },
-    description: 'This is another movie',
-    imgUrl: 'https://m.media-amazon.com/images/M/MV5BM2MyNjYxNmUtYTAwNi00MTYxLWJmNWYtYzZlODY3ZTk3OTFlXkEyXkFqcGdeQXVyNzkwMjQ5NzM@._V1_UY1200_CR107,0,630,1200_AL_.jpg'
-  },
-  {
-    title: 'The Godfather: Part II',
-    rank: '3',
-    genre: {
-        gname: 'Crime',
-        description: 'A film genre inspired by and analogous to the crime fiction literary genre. Films of this genre generally involve various aspects of crime and its detection'
-    },
-    director: {
-      name: 'Francis Ford Coppola',
-      bio: ' An American film director, producer and screenwriter',
-      born: '07.04.1939',
-      died: '-'
-    },
-    description: 'This is the third movie',
-    imgUrl: 'https://m.media-amazon.com/images/M/MV5BM2MyNjYxNmUtYTAwNi00MTYxLWJmNWYtYzZlODY3ZTk3OTFlXkEyXkFqcGdeQXVyNzkwMjQ5NzM@._V1_UY1200_CR107,0,630,1200_AL_.jpg'
-  },
-  {
-    title: 'Pulp Fiction',
-    rank: '4',
-    genre: {
-      gname: 'Comedy',
-      description: 'Comedy may be divided into multiple genres based on the source of humor, the method of delivery, and the context in which it is delivered'
-    },
-    director: {
-      name: 'Quentin Tarantino',
-      bio: ' An American film director, screenwriter, producer, author, and actor',
-      born: '27.03.1963',
-      died: '-'
-    },
-    description: 'This is the fourth movie',
-    imgUrl: 'https://3kek03dv5mw2mgjkf3tvnm31-wpengine.netdna-ssl.com/wp-content/uploads/2021/05/Pulp_Fiction.jpeg'
-  },
-  {
-    title: 'The Good, the Bad and the Ugly',
-    rank: '5',
-    genre: {
-      gname: 'Western',
-      description: 'Western films as those set in the American West that embody the spirit, the struggle, and the demise of the new frontier'
-    },
-    director: {
-      name: 'Sergio Leone',
-      bio: ' An Italian film director, producer and screenwriter, credited as the creator of the Spaghetti Western genre',
-      born: '03.01.1929',
-      died: '30.04.1989'
-    },
-    description: 'This is the last movie',
-    imgUrl: 'https://i.ytimg.com/vi/gcFH2Y7bdmk/movieposter_en.jpg'
-  }
-];
-
-let users = [
-  {
-    id: 1,
-    username: 'Peter',
-    password: 'password1',
-    email: 'peter@google.com',
-    birthday: '2000-01-13'
-  },
-  {
-    id: 2,
-    username: 'Ana',
-    password: 'password2',
-    email: 'ana@google.com',
-    birthday: '2001-04-23'
-  },
-  {
-    id: 3,
-    username: 'Petra',
-    password: 'password3',
-    email: 'petra@google.com',
-    birthday: '1998-11-03'
-  },
-  {
-    id: 4,
-    username: 'Alan',
-    password: 'password4',
-    email: 'alan@google.com',
-    birthday: '1985-07-27'
-  }
-];
 
 app.get('/', (req, res) => {
   const responseText = 'Welcome to my app!';
@@ -145,92 +45,299 @@ app.get('/', (req, res) => {
 });
 
 //------------------movie requests---------------
+//get all movies
 app.get('/movies', (req, res) => {
-  res.json(movies);
+  Movies.find()
+    .then((movies) => {
+      res.status(200).json(movies);
+    }).catch((err) => {
+      console.error(err);
+      res.status(500).sned('Error: ' + err);
+    });
 });
 
+//get movie by title
+app.get('/movies/:Title', (req, res) => {
+  Movies.findOne({
+      Title: req.params.Title
+    })
+    .then((movie) => {
+      res.json(movie);
+    }).catch((err) => {
+      console.error(err);
+      res.status(500).send('Error: ' + err);
+    })
+});
+
+//add movie
 app.post('/movies', (req, res) => {
-  const newMovie = req.body;
-
-  if (!newMovie.title) {
-    const message = 'Missing title in request body!';
-    res.status(400).send(message);
-  }else {
-    newMovie.id = uuid.v4();
-    movies.push(newMovie);
-    res.status(201).send(newMovie);
-  }
+  Movies.findOne({
+      Title: req.body.Title
+    })
+    .then((movie) => {
+      if (movie) {
+        return res.status(400).send(req.body.Title + ' already exists!');
+      } else {
+        Movies
+          .create({
+            Title: req.body.Title,
+            Description: req.body.Description,
+            Genre: {
+              Name: req.body.Genre.Name,
+              Description: req.body.Genre.Description
+            },
+            Director: {
+              Name: req.body.Director.Name,
+              Bio: req.body.Director.Bio,
+              Birth: req.body.Director.Birth
+            },
+            Actors: [req.body.Actors],
+            ImgPath: req.body.ImgPath,
+            Featured: req.body.Featured
+          })
+          .then((movie) => {
+            res.status(201).json(movie)
+          })
+          .catch((error) => {
+            console.error(error);
+            res.status(500).send('Error: ' + error);
+          })
+      }
+    })
+    .catch((error) => {
+      console.error(error);
+      res.status(500).send('Error: ' + error);
+    });
 });
 
-app.get('/movies/:title', (req, res) => {
-  res.json(movies.find((movie) => {
-    return movie.title === req.params.title
-  }));
+//update movie by title
+app.put('/movies/:Title', (req, res) => {
+  Movies.findOneAndUpdate({
+      Title: req.params.Title
+    }, {
+      $set: {
+        Title: req.body.Title,
+        Description: req.body.Description,
+        Genre: {
+          Name: req.body.Genre.Name,
+          Description: req.body.Genre.Description
+        },
+        Director: {
+          Name: req.body.Director.Name,
+          Bio: req.body.Director.Bio,
+          Birth: req.body.Director.Birth
+        },
+        Actors: [req.body.Actors],
+        ImgPath: req.body.ImgPath,
+        Featured: req.body.Featured
+      }
+    }, {
+      new: true
+    },
+    (err, updatedMovie) => {
+      if (err) {
+        console.error(err);
+        res.status(500).send('Error: ' + err);
+      } else {
+        res.json(updatedMovie);
+      }
+    });
 });
 
-app.get('/movies/directors/:name', (req, res) => {
-  res.json(movies.find((movie) => {
-    return movie.director.name === req.params.name;
-  }));
+//add movies to users favorite list
+app.post('/users/:Username/movies/:MovieID', (req, res) => {
+  Users.findOneAndUpdate({
+      Username: req.params.Username
+    }, {
+      $push: {
+        FavoriteMovies: req.params.MovieID
+      }
+    }, {
+      new: true
+    }, //this line makes sure that updated document is returned
+    (err, updatedUser) => {
+      if (err) {
+        console.error(err);
+        res.status(500).send('Error: ' + err);
+      } else {
+        res.json(updatedUser);
+      }
+    });
 });
 
-app.get('/movies/genre/:name', (req, res) => {
-  res.json(movies.find((movie) => {
-    return movie.genre.gname === req.params.name;
-  }));
+//delete movie from users favorite list
+app.delete('/users/:Username/removeFromFav/:MovieID', (req, res) => {
+  Users.findOneAndUpdate({
+      Username: req.params.Username
+    }, {
+      $pull: {
+        FavoriteMovies: req.params.MovieID
+      }
+    }, {
+      new: true //This line makes sure that the updated Document is returned
+    },
+    (err, updatedUser) => {
+      if (err) {
+        console.error(err);
+        res.status(500).send('Error: ' + err);
+      } else {
+        res.json(updatedUser);
+      }
+    });
+});
+
+//----------------genre requests--------------------
+//get all genres
+app.get('/genres', (req, res) => {
+  Genres.find()
+    .then((genre) => {
+      res.status(200).json(genre);
+    }).catch((err) => {
+      console.error(err);
+      res.status(500).sned('Error: ' + err);
+    });
+});
+
+//get genres by name
+app.get('/genres/:Name', (req, res) => {
+  Genres.findOne({
+      Name: req.params.Name
+    })
+    .then((genre) => {
+      res.json(genre);
+    }).catch((err) => {
+      console.error(err);
+      res.status(500).send('Error: ' + err);
+    })
+});
+
+//----------------director requests--------------------
+//get all directors
+app.get('/directors', (req, res) => {
+  Directors.find()
+    .then((director) => {
+      res.status(200).json(director);
+    }).catch((err) => {
+      console.error(err);
+      res.status(500).sned('Error: ' + err);
+    });
+});
+
+//get directors by name
+app.get('/directors/:Name', (req, res) => {
+  Directors.findOne({
+      Name: req.params.Name
+    })
+    .then((director) => {
+      res.json(director);
+    }).catch((err) => {
+      console.error(err);
+      res.status(500).send('Error: ' + err);
+    })
 });
 
 //------------------user requests---------------
-
+//gett all users
 app.get('/users', (req, res) => {
-  res.json(users);
+  Users.find()
+    .then((users) => {
+      res.status(201).json(users);
+    }).catch((err) => {
+      console.error(err);
+      res.status(500).send('Error: ' + err);
+    });
 });
 
+//get user by username
+app.get('/users/:Username', (req, res) => {
+  Users.findOne({
+      Username: req.params.Username
+    })
+    .then((user) => {
+      res.json(user);
+    }).catch((err) => {
+      console.error(err);
+      res.status(500).send('Error: ' + err);
+    });
+});
+
+//add user
 app.post('/users', (req, res) => {
-  const newUser = req.body;
-
-  if (!newUser.username) {
-    const message = 'Missing username in request body!';
-    res.status(400).send(message);
-  }else {
-    newUser.id = uuid.v4();
-    users.push(newUser);
-    res.status(201).send(newUser);
-  }
+  Users.findOne({
+      Username: req.body.Username
+    })
+    .then((user) => {
+      if (user) {
+        return res.status(400).send(req.body.Username + ' already exists!');
+      } else {
+        Users
+          .create({
+            FirstName: req.body.FirstName,
+            LastName: req.body.LastName,
+            Username: req.body.Username,
+            Password: req.body.Password,
+            Email: req.body.Email,
+            Birth: req.body.Birth
+          }).then((user) => {
+            res.status(201).json(user)
+          })
+          .catch((error) => {
+            console.error(error);
+            res.status(500).send('Error: ' + error);
+          })
+      }
+    }).catch((error) => {
+      console.error(error);
+      res.status(500).send('Error: ' + error);
+    });
 });
 
-app.put('/users/:username', (req, res) => {
-  const user = users.find((user) => { return user.username === req.params.username });
-
-  if (!user) {
-    res.status(404).send('User with the name ' + req.params.username + ' was not found.');
-  } else {
-    user.username = req.body.username;
-    res.status(201).send('User ' + req.params.username + ' changed her/his name to: ' + user.username);
-  }
+//update user by username
+//?? how to update a single field without turning the other fields to null???
+app.put('/users/:Username', (req, res) => {
+  Users.findOneAndUpdate({
+      Username: req.params.Username
+    }, {
+      $set: {
+        FirstName: req.body.FirstName,
+        LastName: req.body.LastName,
+        Username: req.body.Username,
+        Password: req.body.Password,
+        Email: req.body.Email,
+        Birth: req.body.Birth
+      }
+    }, {
+      new: true
+    }, //this line makes sure that updated document is returned
+    (err, updatedUser) => {
+      if (err) {
+        console.error(err);
+        res.status(500).send('Error: ' + err);
+      } else {
+        res.json(updatedUser);
+      }
+    });
 });
 
-app.delete('/users/:username', (req, res) => {
-  const userToDelete = users.find((userToDelete) => { return userToDelete.username === req.params.username });
-
-  if(userToDelete) {
-    users = users.filter((obj) => { return obj.username !== req.params.username });
-    res.status(201).send('User ' + req.params.username + ' was successfully deleted!');
-  } else {
-      res.status(404).send('User with the name ' + req.params.username + ' was not found.');
-  }
+//delete user by username
+app.delete('/users/:Username', (req, res) => {
+  Users.findOneAndDelete({
+    Username: req.params.Username
+  }).then((user) => {
+    if (!user) {
+      res.status(400).send(req.params.Username + ' was not found!');
+    } else {
+      res.status(200).send(req.params.Username + ' was removed!');
+    }
+  }).catch((err) => {
+    console.error(err);
+    res.status(500).send('Error: ' + err);
+  });
 });
 
 //-------------------documentation--------------
 app.get('/documentation', (req, res) => {
   res.sendFile(path.join(__dirname, 'public/documentation.html'));
-});
-
-
-app.get('/secreturl', (req, res) => {
-  const responseText = 'This is a secret url with super top-secret content.';
-  responseText += '<small><br> Requested at: ' + req.requestTime + '</small>';
-  res.send(responseText);
 });
 
 //---------------------error handling------------
