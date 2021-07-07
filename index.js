@@ -1,16 +1,27 @@
-const express = require('express'),
-  morgan = require('morgan'),
-  path = require('path'),
-  bodyParser = require('body-parser'),
-  uuid = require('uuid'),
-  mongoose = require('mongoose'),
-  Models = require('./models.js');
+const  mongoose = require('mongoose'),
+       Models = require('./models.js');
 
-const app = express();
 const Movies = Models.Movie;
 const Users = Models.User;
 const Genres = Models.Genre;
 const Directors = Models.Director;
+
+const express = require('express'),
+  morgan = require('morgan'),
+  path = require('path'),
+  bodyParser = require('body-parser'),
+  app = express(),
+  uuid = require('uuid');
+
+app.use(morgan('common'));
+app.use(express.static('public'));
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+
+let auth = require('./auth')(app);
+
+const  passport = require('passport');
+require('./passport');
 
 mongoose.connect('mongodb://localhost:27017/cinemAppDB', {
   useNewUrlParser: true,
@@ -30,13 +41,6 @@ const myLogger = (req, res, next) => {
 
 app.use(requestTime);
 app.use(myLogger);
-app.use(morgan('common'));
-app.use(express.static('public'));
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({
-  extended: true
-}));
-
 
 app.get('/', (req, res) => {
   const responseText = 'Welcome to my app!';
@@ -46,7 +50,7 @@ app.get('/', (req, res) => {
 
 //------------------movie requests---------------
 //get all movies
-app.get('/movies', (req, res) => {
+app.get('/movies', passport.authenticate('jwt', { session: false }), (req, res) => {
   Movies.find()
     .then((movies) => {
       res.status(200).json(movies);
@@ -57,7 +61,7 @@ app.get('/movies', (req, res) => {
 });
 
 //get movie by title
-app.get('/movies/:Title', (req, res) => {
+app.get('/movies/:Title', passport.authenticate('jwt', { session: false }), (req, res) => {
   Movies.findOne({
       Title: req.params.Title
     })
@@ -70,7 +74,7 @@ app.get('/movies/:Title', (req, res) => {
 });
 
 //add movie
-app.post('/movies', (req, res) => {
+app.post('/movies', passport.authenticate('jwt', { session: false }), (req, res) => {
   Movies.findOne({
       Title: req.body.Title
     })
@@ -82,15 +86,8 @@ app.post('/movies', (req, res) => {
           .create({
             Title: req.body.Title,
             Description: req.body.Description,
-            Genre: {
-              Name: req.body.Genre.Name,
-              Description: req.body.Genre.Description
-            },
-            Director: {
-              Name: req.body.Director.Name,
-              Bio: req.body.Director.Bio,
-              Birth: req.body.Director.Birth
-            },
+            Genre: req.body.Genre,
+            Director: req.body.Director,
             Actors: [req.body.Actors],
             ImgPath: req.body.ImgPath,
             Featured: req.body.Featured
@@ -111,41 +108,34 @@ app.post('/movies', (req, res) => {
 });
 
 //update movie by title
-app.put('/movies/:Title', (req, res) => {
-  Movies.findOneAndUpdate({
-      Title: req.params.Title
-    }, {
-      $set: {
-        Title: req.body.Title,
-        Description: req.body.Description,
-        Genre: {
-          Name: req.body.Genre.Name,
-          Description: req.body.Genre.Description
-        },
-        Director: {
-          Name: req.body.Director.Name,
-          Bio: req.body.Director.Bio,
-          Birth: req.body.Director.Birth
-        },
-        Actors: [req.body.Actors],
-        ImgPath: req.body.ImgPath,
-        Featured: req.body.Featured
-      }
-    }, {
-      new: true
-    },
-    (err, updatedMovie) => {
-      if (err) {
-        console.error(err);
-        res.status(500).send('Error: ' + err);
-      } else {
-        res.json(updatedMovie);
-      }
-    });
-});
+// app.put('/movies/:Title', passport.authenticate('jwt', { session: false }), (req, res) => {
+//   Movies.findOneAndUpdate({
+//       Title: req.params.Title
+//     }, {
+//       $set: {
+//         Title: req.body.Title,
+//         Description: req.body.Description,
+//         Description: req.body.Description,
+//         Genre: req.body.Genre,
+//         Actors: [req.body.Actors],
+//         ImgPath: req.body.ImgPath,
+//         Featured: req.body.Featured
+//       }
+//     }, {
+//       new: true
+//     },
+//     (err, updatedMovie) => {
+//       if (err) {
+//         console.error(err);
+//         res.status(500).send('Error: ' + err);
+//       } else {
+//         res.json(updatedMovie);
+//       }
+//     });
+// });
 
 //add movies to users favorite list
-app.post('/users/:Username/movies/:MovieID', (req, res) => {
+app.post('/users/:Username/movies/:MovieID', passport.authenticate('jwt', { session: false }), (req, res) => {
   Users.findOneAndUpdate({
       Username: req.params.Username
     }, {
@@ -166,7 +156,7 @@ app.post('/users/:Username/movies/:MovieID', (req, res) => {
 });
 
 //delete movie from users favorite list
-app.delete('/users/:Username/removeFromFav/:MovieID', (req, res) => {
+app.delete('/users/:Username/removeFromFav/:MovieID', passport.authenticate('jwt', { session: false }), (req, res) => {
   Users.findOneAndUpdate({
       Username: req.params.Username
     }, {
@@ -188,7 +178,7 @@ app.delete('/users/:Username/removeFromFav/:MovieID', (req, res) => {
 
 //----------------genre requests--------------------
 //get all genres
-app.get('/genres', (req, res) => {
+app.get('/genres', passport.authenticate('jwt', { session: false }), (req, res) => {
   Genres.find()
     .then((genre) => {
       res.status(200).json(genre);
@@ -199,7 +189,7 @@ app.get('/genres', (req, res) => {
 });
 
 //get genres by name
-app.get('/genres/:Name', (req, res) => {
+app.get('/genres/:Name', passport.authenticate('jwt', { session: false }), (req, res) => {
   Genres.findOne({
       Name: req.params.Name
     })
@@ -213,7 +203,7 @@ app.get('/genres/:Name', (req, res) => {
 
 //----------------director requests--------------------
 //get all directors
-app.get('/directors', (req, res) => {
+app.get('/directors', passport.authenticate('jwt', { session: false }), (req, res) => {
   Directors.find()
     .then((director) => {
       res.status(200).json(director);
@@ -224,7 +214,7 @@ app.get('/directors', (req, res) => {
 });
 
 //get directors by name
-app.get('/directors/:Name', (req, res) => {
+app.get('/directors/:Name', passport.authenticate('jwt', { session: false }), (req, res) => {
   Directors.findOne({
       Name: req.params.Name
     })
@@ -238,7 +228,7 @@ app.get('/directors/:Name', (req, res) => {
 
 //------------------user requests---------------
 //gett all users
-app.get('/users', (req, res) => {
+app.get('/users', passport.authenticate('jwt', { session: false }), (req, res) => {
   Users.find()
     .then((users) => {
       res.status(201).json(users);
@@ -249,7 +239,7 @@ app.get('/users', (req, res) => {
 });
 
 //get user by username
-app.get('/users/:Username', (req, res) => {
+app.get('/users/:Username', passport.authenticate('jwt', { session: false }), (req, res) => {
   Users.findOne({
       Username: req.params.Username
     })
@@ -262,7 +252,7 @@ app.get('/users/:Username', (req, res) => {
 });
 
 //add user
-app.post('/users', (req, res) => {
+app.post('/users', passport.authenticate('jwt', { session: false }), (req, res) => {
   Users.findOne({
       Username: req.body.Username
     })
@@ -294,7 +284,7 @@ app.post('/users', (req, res) => {
 
 //update user by username
 //?? how to update a single field without turning the other fields to null???
-app.put('/users/:Username', (req, res) => {
+app.put('/users/:Username', passport.authenticate('jwt', { session: false }), (req, res) => {
   Users.findOneAndUpdate({
       Username: req.params.Username
     }, {
@@ -320,7 +310,7 @@ app.put('/users/:Username', (req, res) => {
 });
 
 //delete user by username
-app.delete('/users/:Username', (req, res) => {
+app.delete('/users/:Username', passport.authenticate('jwt', { session: false }), (req, res) => {
   Users.findOneAndDelete({
     Username: req.params.Username
   }).then((user) => {
@@ -336,7 +326,7 @@ app.delete('/users/:Username', (req, res) => {
 });
 
 //-------------------documentation--------------
-app.get('/documentation', (req, res) => {
+app.get('/documentation', passport.authenticate('jwt', { session: false }), (req, res) => {
   res.sendFile(path.join(__dirname, 'public/documentation.html'));
 });
 
