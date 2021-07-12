@@ -44,24 +44,15 @@ app.use(bodyParser.urlencoded({
 const passport = require('passport');
 require('./passport');
 
-mongoose.connect('mongodb://localhost:27017/cinemAppDB', {
+// mongoose.connect('mongodb://localhost:27017/cinemAppDB', {
+//   useNewUrlParser: true,
+//   useUnifiedTopology: true
+// });
+
+mongoose.connect(process.env.CONNECTION_URI, {
   useNewUrlParser: true,
   useUnifiedTopology: true
 });
-
-
-// const requestTime = (req, res, next) => {
-//   req.requestTime = Date.now();
-//   next();
-// }
-//
-// const myLogger = (req, res, next) => {
-//   console.log('Request URL: ' + req.url);
-//   next();
-// }
-//
-// // app.use(requestTime);
-// app.use(myLogger);
 
 app.get('/', (req, res) => {
   const responseText = '<h1 style= "text-align: center; margin-top: 15%"> Welcome to my cinemApp! </h1>';
