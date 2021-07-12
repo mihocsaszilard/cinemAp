@@ -27,8 +27,8 @@
 
   <h2>Technical Requirements</h2>
   
+  <h4>The API:</h4>
   <ul>
-  <li><h4>The API:</h4><li>
   <li>must be a Node.js and Express application,</li>
   <li>must use REST architecture, with URL endpoints corresponding to the data operations listed above,</li>
   <li>must use at least three middleware modules, such as the body-parser package for reading data from requests and morgan for logging,</li>
@@ -40,7 +40,7 @@
   <li>must meet data security regulations,</li>
   <li>source code must be deployed to a publicly accessible platform like GitHub,</li>
   <li>must be deployed to Heroku.</li>
-  <li></li>
+  <br>
   <li>The database must be built using MongoDB.</li>
   <li>The business logic must be modeled with Mongoose.</li>
   <li>The JavaScript code must be error-free.</li>
