@@ -13,11 +13,11 @@
 
   <p class="text-center w-75 m-auto mb-3 mt-3">To build the server-side component of a “movies” web application. The web
     application will provide userss with access to information about different
-    movies, directors, and genres. userss will be able to sign up, update their
+    movies, directors, and genres. Users will be able to sign up, update their
     personal information, and create a list of their favorite movies.
   </p>
-
-  <table class="table table-striped table-bordered table-hover table-sm w-75 m-auto">
+<h2 class="mx-5 px-2">Endpoints: </h2>
+  <table class="table table-striped table-bordered table-hover table-sm w-75 m-auto mb-5">
     <thead class="table-dark">
       <tr>
         <th scope="col">Business Logic</th>
@@ -30,20 +30,20 @@
     </thead>
     <tbody>
       <tr>
-        <td>Return a list of movies</td>
-        <td>/movies</td>
-        <td>none</td>
-        <td>GET</td>
-        <td>None</td>
-        <td>A JSON object holding data about all the movies</td>
+        <td class="align-middle">Return a list of movies</td>
+        <td class="align-middle">/movies</td>
+        <td class="align-middle">none</td>
+        <td class="align-middle">GET</td>
+        <td class="align-middle">None</td>
+        <td class="align-middle">A JSON object holding data about all the movies</td>
       </tr>
       <tr>
-        <td>Return data about a movie by title</td>
-        <td>/movies/[Title]</td>
-        <td>/movies/:Title</td>
-        <td>GET</td>
-        <td>None</td>
-        <td>A JSON object holding data about a movie <br /><em>e.g.:</em> {
+        <td class="align-middle">Return data about a movie by title</td>
+        <td class="align-middle">/movies/[Title]</td>
+        <td class="align-middle">/movies/:Title</td>
+        <td class="align-middle">GET</td>
+        <td class="align-middle">None</td>
+        <td class="align-middle">A JSON object holding data about a movie <br /><em>e.g.:</em> {
           <br> "_id": "60e30c0b9b04b2658012a99a",
           <br> "Title": "Bohemian Rhapsody",
           <br> "Director": "60e496cc8fc408e573889dfc",
@@ -55,24 +55,24 @@
         </td>
       </tr>
       <tr>
-        <td>Return data about a genre by name</td>
-        <td>/genres/[Name]</td>
-        <td>/genres/:Name</td>
-        <td>GET</td>
-        <td>None</td>
-        <td>A JSON object holding data about a genre <br /><em>e.g.:</em> {
+        <td class="align-middle">Return data about a genre by name</td>
+        <td class="align-middle">/genres/[Name]</td>
+        <td class="align-middle">/genres/:Name</td>
+        <td class="align-middle">GET</td>
+        <td class="align-middle">None</td>
+        <td class="align-middle">A JSON object holding data about a genre <br /><em>e.g.:</em> {
           <br>"_id": "60e48c48651578ba39b7b385",
           <br>"Name": "Biography",
           <br>"Description": "A biographical film, or biopic ..." <br> }
         </td>
       </tr>
       <tr>
-        <td>Return data about a director by name</td>
-        <td>/directors/[Name]</td>
-        <td>/directors/:Name</td>
-        <td>GET</td>
-        <td>None</td>
-        <td>A JSON object holding data about a director <br /><em>e.g.:</em> {
+        <td class="align-middle">Return data about a director by name</td>
+        <td class="align-middle">/directors/[Name]</td>
+        <td class="align-middle">/directors/:Name</td>
+        <td class="align-middle">GET</td>
+        <td class="align-middle">None</td>
+        <td class="align-middle">A JSON object holding data about a director <br /><em>e.g.:</em> {
          <br> {
            <br>"_id": "60e496958fc408e573889dfb",
            <br>"Name": "Francis Ford Coppola",
@@ -80,59 +80,59 @@
            <br>"Birthyear": "1939-04-07T00:00:00.000Z" <br>}
          </tr>
       <tr>
-        <td>Allow new users to register</td>
-        <td>/users</td>
-        <td>None</td>
-        <td>POST</td>
-        <td>A JSON object holding data about the registered users <br> {
+        <td class="align-middle">Allow new users to register</td>
+        <td class="align-middle">/users</td>
+        <td class="align-middle">None</td>
+        <td class="align-middle">POST</td>
+        <td class="align-middle">A JSON object holding data about the registered users <br> {
           <br>"Username: "rickSanchez",
           <br>"FirstName": "Rick",
           <br>"LastName": "Sanchez",
           <br>"Password": "squanchy"
-          <br> Email: "WubbaLubbaDubDub@gmail.com"
-          <br> Birth: "1969-01-28" <br> }
+          <br>"Email": "WubbaLubbaDubDub@gmail.com"
+          <br>"Birth": "1969-01-28" <br> }
         </td>
-        <td>A JSON object holding data about the user that was registered, inculding an ID:
+        <td class="align-middle">A JSON object holding data about the user that was registered, inculding an ID:
           <br /><em>e.g.:</em> { <br> _id:"60e32d9b9b04b2658012a9a8",
           <br>"Username: "rickSanchez",
           <br>"FirstName": "Rick",
           <br>"LastName": "Sanchez",
           <br>"Password": "squanchy"
-          <br> Email: "WubbaLubbaDubDub@gmail.com"
-          <br> Birth: "1969-01-28" <br>
-          <br> "FavoriteMovies": [] <br> }
+          <br>"Email": "WubbaLubbaDubDub@gmail.com"
+          <br>"Birth": "1969-01-28" <br>
+          <br>"FavoriteMovies": [] <br> }
         </td>
       </tr>
       <tr>
-        <td>Allow users to update their info</td>
-        <td>/users/[username]</td>
-        <td>/users/:username</td>
-        <td>PUT</td>
-        <td>A JSON object holding data about the users update <em>e.g.:</em> <br> {
+        <td class="align-middle">Allow users to update their info</td>
+        <td class="align-middle">/users/[username]</td>
+        <td class="align-middle">/users/:username</td>
+        <td class="align-middle">PUT</td>
+        <td class="align-middle">A JSON object holding data about the users update <em>e.g.:</em> <br> {
           <br>"Username: "Morty7",
           <br>"FirstName": "Morty",
           <br>"LastName": "Sanchez",
           <br>"Password": "WubbaLubbaDubDub"
-          <br> Email: "mortyy7@gmail.com"
-          <br> Birth: "1999-05-08" <br> }
+          <br>"Email": "mortyy7@gmail.com"
+          <br>"Birth": "1999-05-08" <br> }
         </td>
-        <td>A JSON object holding data about the updated user includind an ID <em>e.g.:</em> <br> {
+        <td class="align-middle">A JSON object holding data about the updated user includind an ID <em>e.g.:</em> <br> {
           <br>"_id": "60e32f6a9b04b2658012a9ad",
           <br>"Username: "Morty7",
           <br>"FirstName": "Morty",
           <br>"LastName": "Sanchez",
           <br>"Password": "WubbaLubbaDubDub"
-          <br> Email: "mortyy7@gmail.com"
-          <br> Birth: "1999-05-08" <br> }
+          <br>"Email": "mortyy7@gmail.com"
+          <br>"Birth": "1999-05-08" <br> }
         </td>
       </tr>
       <tr>
-        <td>Allow users to add movies to their list of favorites</td>
-        <td>/users/[Username]/favorites/[MovieID]</td>
-        <td>/users/:Username/favorites/:MovieID</td>
-        <td>POST</td>
-        <td>None</td>
-        <td>A JSON object holding data about the movie whitch added to favorites and about the user who added<br> <em>e.g.:</em> <br> {
+        <td class="align-middle">Allow users to add movies to their list of favorites</td>
+        <td class="align-middle">/users/[Username]/favorites/[MovieID]</td>
+        <td class="align-middle">/users/:Username/favorites/:MovieID</td>
+        <td class="align-middle">POST</td>
+        <td class="align-middle">None</td>
+        <td class="align-middle">A JSON object holding data about the movie whitch added to favorites and about the user who added<br> <em>e.g.:</em> <br> {
             <br> "FavoriteMovies": ["60e30c0b9b04b2658012a99a"],
             <br>"_id": "60e32d9b9b04b2658012a9a8",
             <br>"FirstName": "Rick",
@@ -144,12 +144,12 @@
           </td>
       </tr>
       <tr>
-        <td>Allow users to remove movies to their list of favorites</td>
-        <td>/users/[Username]/removeFromFav/[MovieID]</td>
-        <td>/users/:Username/removeFromFav/:MovieID</td>
-        <td>DELETE</td>
-        <td>None</td>
-        <td>A JSON object holding data the user who deleted. Note that the MovieID is not is not present FavoriteMovies array. <br> <em>e.g.:</em> <br> {
+        <td class="align-middle">Allow users to remove movies to their list of favorites</td>
+        <td class="align-middle">/users/[Username]/removeFromFav/[MovieID]</td>
+        <td class="align-middle">/users/:Username/removeFromFav/:MovieID</td>
+        <td class="align-middle">DELETE</td>
+        <td class="align-middle">None</td>
+        <td class="align-middle">A JSON object holding data the user who deleted. Note that the MovieID is not is not present FavoriteMovies array. <br> <em>e.g.:</em> <br> {
           <br> "FavoriteMovies": [],
           <br>"_id": "60e32d9b9b04b2658012a9a8",
           <br>"FirstName": "Rick",
@@ -161,15 +161,40 @@
         </td>
       </tr>
       <tr>
-        <td>Allow existing users to deregister</td>
-        <td>/users/[Username]</td>
-        <td>/users/:Username</td>
-        <td>DELETE</td>
-        <td>None</td>
-        <td>A text message indicating whether the user was successfully deregistered</td>
+        <td class="align-middle">Allow existing users to deregister</td>
+        <td class="align-middle">/users/[Username]</td>
+        <td class="align-middle">/users/:Username</td>
+        <td class="align-middle">DELETE</td>
+        <td class="align-middle">None</td>
+        <td class="align-middle">A text message indicating whether the user was successfully deregistered</td>
       </tr>
     </tbody>
   </table>
+
+<div class="navbar fixed-bottom text-light bg-dark my-auto">
+
+  <h4 class="mx-4">Made with love and also with:</h4>
+
+
+  <p class="my-auto">JavaScript</p>
+  <p class="my-auto">Node.js</p>
+  <p class="my-auto">Express</p>
+  <p class="my-auto">MongoDB</p>
+  <p class="my-auto">Mongoose</p>
+
+
+<h4>Hosted on Heroku</h4> -> <a href="https://cinemapp-backend.herokuapp.com/">cinemApp</a>
+
+
+<h4> Useful links:</h4>
+
+<a href="https://github.com/mihocsaszilard/cinemApp">GitHub repo</a><br>
+<h4>Author: </h4>
+<a href="https://www.linkedin.com/in/mihocsaszilard">LinkedIn</a><br>
+<a href="https://github.com/mihocsaszilard">GitHub</a><br>
+
+</div>
+
 
 </body>
 
