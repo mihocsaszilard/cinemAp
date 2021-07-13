@@ -55,14 +55,14 @@
   <li>MongoDB</li>
   <li>Mongoose</li>
 </ul>
-<br>Hosted on Heroku as [cinemApp](https://cinemapp-backend.herokuapp.com/)
+<br>Hosted on Heroku as [CinemApp](https://cinemapp-backend.herokuapp.com)
 
 <h2> Useful links</h2>
 
 [GitHub repo](https://github.com/mihocsaszilard/cinemApp)<br>
 [Documentation](https://cinemapp-backend.herokuapp.com/doocumentation)<br>
 Author: <br>
-[LinkedIn](https://www.linkedin.com/in/mihocsaszilard/)<br>
+[LinkedIn](https://www.linkedin.com/in/mihocsaszilard)<br>
 [GitHub](https://github.com/mihocsaszilard)<br>
 
 </body>
