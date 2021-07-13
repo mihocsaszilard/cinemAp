@@ -399,9 +399,7 @@ app.delete('/users/:Username', passport.authenticate('jwt', {
 });
 
 //-------------------documentation--------------
-app.get('/documentation', passport.authenticate('jwt', {
-  session: false
-}), (req, res) => {
+app.get('/documentation', (req, res) => {
   res.sendFile(path.join(__dirname, 'public/documentation.html'));
 });
 
