@@ -55,8 +55,9 @@
   <li>MongoDB</li>
   <li>Mongoose</li>
 </ul>
-<br>
-[The app](https://cinemapp-backend.herokuapp.com/) is hosted on Heroku
+
+Hosted on Heroku
+[cinemApp](https://cinemapp-backend.herokuapp.com/)
 
 <h2> Useful links</h2>
 
