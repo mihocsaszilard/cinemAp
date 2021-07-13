@@ -56,7 +56,7 @@
   <li>Mongoose</li>
 </ul>
 
-Hosted on Heroku
+Hosted on Heroku -> 
 [cinemApp](https://cinemapp-backend.herokuapp.com/)
 
 <h2> Useful links</h2>
