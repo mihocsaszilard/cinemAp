@@ -55,7 +55,7 @@ mongoose.connect(process.env.CONNECTION_URI, {
 });
 
 app.get('/', (req, res) => {
-  const responseText = '<h1 style= "text-align: center; margin-top: 15%"> Welcome to cinemApp! </h1>';
+  const responseText = '<body style="background-color: black"><div style= "height: 90vh; width: 94vw; background: black; background: url(/img/CinemApp5.png) center center no-repeat; padding: 2%;"><h1 style= "color: white; font-weight: 100; font-family: sans-serif; text-align: center; padding-top: 15%;"> Welcome to </h1></div></body>';
   res.send(responseText);
 });
 
