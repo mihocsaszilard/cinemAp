@@ -62,7 +62,7 @@ Hosted on Heroku ->
 <h2> Useful links</h2>
 
 [GitHub repo](https://github.com/mihocsaszilard/cinemApp)<br>
-[Documentation](https://cinemapp-backend.herokuapp.com/doocumentation)<br>
+[Documentation](https://cinemapp-backend.herokuapp.com/documentation)<br>
 Author: <br>
 [LinkedIn](https://www.linkedin.com/in/mihocsaszilard)<br>
 [GitHub](https://github.com/mihocsaszilard)<br>
