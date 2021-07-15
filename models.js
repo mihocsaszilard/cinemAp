@@ -7,7 +7,7 @@ let movieSchema = mongoose.Schema({
   Director: [{type: mongoose.Schema.Types.ObjectId, ref: 'Director'}],
   ImgPath: String,
   Featured: Boolean,
-  Actors: [String]
+  Actors: [{type: mongoose.Schema.Types.ObjectId, ref: 'Actor'}]
 });
 
 let userSchema = mongoose.Schema({
@@ -17,7 +17,7 @@ let userSchema = mongoose.Schema({
   Password: {type: String, required: true},
   Email: String,
   Birth: Date,
-  FavoriteMovies:[{type: mongoose.Schema.Types.ObjectId, ref: 'Movie'}]
+  FavoriteMovies: [{type: mongoose.Schema.Types.ObjectId, ref: 'Movie'}]
 });
 
 userSchema.statics.hashPassword = (password) => {
@@ -42,7 +42,8 @@ let directorSchema = mongoose.Schema({
 let actorSchema = mongoose.Schema({
   Name: {type: String, required: true},
   Bio: {type: String, required: true},
-  Birthyear: Date
+  Birthyear: Date,
+  Movies: [{type: mongoose.Schema.Types.ObjectId, ref: 'Movie'}]
 });
 
 let Movie = mongoose.model('Movie', movieSchema);

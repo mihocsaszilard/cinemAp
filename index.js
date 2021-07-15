@@ -429,6 +429,21 @@ app.get('/actors/:Name', passport.authenticate('jwt', {
     })
 });
 
+//get movies by actor
+app.get('/movies/:ActorID', passport.authenticate('jwt', {
+  session:false
+}), (req, res) => {
+  Movies.find({
+    Actors: req.params.ActorID
+  })
+  .then((movie) => {
+    res.json(movie);
+  }).catch((err) => {
+    console.error(err);
+    res.status(500).send('Errror: ' + err);
+  })
+});
+
 //-------------------documentation--------------
 app.get('/documentation', (req, res) => {
   res.sendFile(path.join(__dirname, 'public/documentation.html'));
