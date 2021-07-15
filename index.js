@@ -401,6 +401,7 @@ app.delete('/users/:Username', passport.authenticate('jwt', {
 
 //--------------------Actor queries----------------
 
+//get all actors
 app.get('/actors', passport.authenticate('jwt', {
   session: false
 }), (req, res) => {
@@ -411,6 +412,21 @@ app.get('/actors', passport.authenticate('jwt', {
       console.error(err);
       res.status(500).sned('Error: ' + err);
     });
+});
+
+//get actor by name
+app.get('/actors/:Name', passport.authenticate('jwt', {
+  session: false
+}), (req, res) => {
+  Actors.findOne({
+      Name: req.params.Name
+    })
+    .then((actor) => {
+      res.json(actor);
+    }).catch((err) => {
+      console.error(err);
+      res.status(500).send('Error: ' + err);
+    })
 });
 
 //-------------------documentation--------------
