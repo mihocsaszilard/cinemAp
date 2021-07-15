@@ -431,10 +431,10 @@ app.get('/actors/:Name', passport.authenticate('jwt', {
 
 //get movies by actor
 app.get('/movies/:ActorID', passport.authenticate('jwt', {
-  session:false
+  session: false
 }), (req, res) => {
-  Movies.findOne({
-    Actors: req.params.ActorID
+  Movies.find({
+    Actors: {$all: [req.params.ActorID]}
   })
   .then((movie) => {
     res.json(movie);
