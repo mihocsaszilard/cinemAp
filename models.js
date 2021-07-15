@@ -49,7 +49,7 @@ let Movie = mongoose.model('Movie', movieSchema);
 let User = mongoose.model('User', userSchema);
 let Genre = mongoose.model('Genre', genreSchema);
 let Director = mongoose.model('Director', directorSchema);
-let Actor = mongoose.model('Genre', actorSchema);
+let Actor = mongoose.model('Actor', actorSchema);
 
 module.exports.Movie = Movie;
 module.exports.User = User;
