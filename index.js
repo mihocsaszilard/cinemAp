@@ -429,7 +429,7 @@ app.get('/actors/:Name', passport.authenticate('jwt', {
     })
 });
 
-//get movies by actor
+//get movies by actor -----gives null
 app.get('/movies/:ActorID', passport.authenticate('jwt', {
   session: false
 }), (req, res) => {
@@ -444,8 +444,8 @@ app.get('/movies/:ActorID', passport.authenticate('jwt', {
   })
 });
 
-//get actors by movieID
-app.get('/actors/:MovieID', passport.authenticate('jwt', {
+//get actors by movieID -----gives null
+app.get('/actors/movies/:MovieID', passport.authenticate('jwt', {
   session: false
 }), (req, res) => {
   let find = req.params.MovieID.toString();
