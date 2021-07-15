@@ -433,14 +433,14 @@ app.get('/actors/:Name', passport.authenticate('jwt', {
 app.get('/movies/:ActorID', passport.authenticate('jwt', {
   session:false
 }), (req, res) => {
-  Movies.find({
+  Movies.Actors.find({
     Actors: req.params.ActorID
   })
   .then((movie) => {
     res.json(movie);
   }).catch((err) => {
     console.error(err);
-    res.status(500).send('Errror: ' + err);
+    res.status(500).send('Error: ' + err);
   })
 });
 
