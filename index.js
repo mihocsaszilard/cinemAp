@@ -33,6 +33,7 @@ const Movies = Models.Movie;
 const Users = Models.User;
 const Genres = Models.Genre;
 const Directors = Models.Director;
+const Actors = Models.Actor;
 
 app.use(morgan('common'));
 app.use(express.static('public'));
@@ -89,40 +90,40 @@ app.get('/movies/:Title', passport.authenticate('jwt', {
 });
 
 //add movie
-app.post('/movies', passport.authenticate('jwt', {
-  session: false
-}), (req, res) => {
-  Movies.findOne({
-      Title: req.body.Title
-    })
-    .then((movie) => {
-      if (movie) {
-        return res.status(400).send(req.body.Title + ' already exists!');
-      } else {
-        Movies
-          .create({
-            Title: req.body.Title,
-            Description: req.body.Description,
-            Genre: req.body.Genre,
-            Director: req.body.Director,
-            Actors: [req.body.Actors],
-            ImgPath: req.body.ImgPath,
-            Featured: req.body.Featured
-          })
-          .then((movie) => {
-            res.status(201).json(movie)
-          })
-          .catch((error) => {
-            console.error(error);
-            res.status(500).send('Error: ' + error);
-          })
-      }
-    })
-    .catch((error) => {
-      console.error(error);
-      res.status(500).send('Error: ' + error);
-    });
-});
+// app.post('/movies', passport.authenticate('jwt', {
+//   session: false
+// }), (req, res) => {
+//   Movies.findOne({
+//       Title: req.body.Title
+//     })
+//     .then((movie) => {
+//       if (movie) {
+//         return res.status(400).send(req.body.Title + ' already exists!');
+//       } else {
+//         Movies
+//           .create({
+//             Title: req.body.Title,
+//             Description: req.body.Description,
+//             Genre: req.body.Genre,
+//             Director: req.body.Director,
+//             Actors: [req.body.Actors],
+//             ImgPath: req.body.ImgPath,
+//             Featured: req.body.Featured
+//           })
+//           .then((movie) => {
+//             res.status(201).json(movie)
+//           })
+//           .catch((error) => {
+//             console.error(error);
+//             res.status(500).send('Error: ' + error);
+//           })
+//       }
+//     })
+//     .catch((error) => {
+//       console.error(error);
+//       res.status(500).send('Error: ' + error);
+//     });
+// });
 
 //update movie by title
 // app.put('/movies/:Title', passport.authenticate('jwt', { session: false }), (req, res) => {
@@ -396,6 +397,20 @@ app.delete('/users/:Username', passport.authenticate('jwt', {
     console.error(err);
     res.status(500).send('Error: ' + err);
   });
+});
+
+//--------------------Actor queries----------------
+
+app.get('/actors', passport.authenticate('jwt', {
+  session: false
+}), (req, res) => {
+  Actors.find()
+    .then((actors) => {
+      res.status(200).json(actors);
+    }).catch((err) => {
+      console.error(err);
+      res.status(500).sned('Error: ' + err);
+    });
 });
 
 //-------------------documentation--------------

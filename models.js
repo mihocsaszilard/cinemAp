@@ -39,12 +39,20 @@ let directorSchema = mongoose.Schema({
   Birthyear: Date
 });
 
+let actorSchema = mongoose.Schema({
+  Name: {type: String, required: true},
+  Bio: {type: String, required: true},
+  Birthyear: Date
+});
+
 let Movie = mongoose.model('Movie', movieSchema);
 let User = mongoose.model('User', userSchema);
 let Genre = mongoose.model('Genre', genreSchema);
 let Director = mongoose.model('Director', directorSchema);
+let Actor = mongoose.model('Genre', actorSchema);
 
 module.exports.Movie = Movie;
 module.exports.User = User;
 module.exports.Genre = Genre;
 module.exports.Director = Director;
+module.exports.Actor = Actor;
