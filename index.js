@@ -449,7 +449,7 @@ app.get('/actors/:MovieID', passport.authenticate('jwt', {
   session: false
 }), (req, res) => {
   Actors.Movies.find({
-    Movies: req.params.MovieID
+    Moviess: req.params.MovieID
   })
   .then((actor) => {
     res.json(actor);
