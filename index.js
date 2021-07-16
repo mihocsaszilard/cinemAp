@@ -438,6 +438,7 @@ app.get('/movies/:ActorID', passport.authenticate('jwt', {
   })
   .then((movie) => {
     res.json(movie);
+    console.log(req.params.ActorID);
   }).catch((err) => {
     console.error(err);
     res.status(500).send('Error: ' + err);
