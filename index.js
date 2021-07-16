@@ -430,10 +430,7 @@ app.get('/actors/:Name', passport.authenticate('jwt', {
 });
 
 //get movies by actor -----gives null
-app.get('/movies/:ActorID',
- // passport.authenticate('jwt', {
- //  session: false}
-), (req, res) => {
+app.get('/movies/:ActorID', (req, res) => {
     let help = req.params.ActorID;
     console.log(help);
     document.write(help);
