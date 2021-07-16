@@ -62,9 +62,9 @@ app.get('/', (req, res) => {
 
 //------------------movie requests---------------
 //get all movies
-app.get('/movies', 
-// passport.authenticate('jwt', {  session: false}),
-(req, res) => {
+app.get('/movies', passport.authenticate('jwt', {
+  session: false
+}), (req, res) => {
   Movies.find()
     .then((movies) => {
       res.status(200).json(movies);
@@ -430,13 +430,11 @@ app.get('/actors/:Name', passport.authenticate('jwt', {
 });
 
 //get movies by actor -----gives null
-app.get('/movies/:ActorID', (req, res) => {
-    let help = req.params.ActorID;
-    console.log(help);
-    document.write(help);
+app.get('/movies/:ActorID', passport.authenticate('jwt', {
+  session: false
+}), (req, res) => {
   Movies.find({
     Actors: req.params.ActorID
-
   })
   .then((movie) => {
     res.json(movie);
