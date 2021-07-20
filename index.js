@@ -198,9 +198,7 @@ app.delete('/users/:Username/removeFromFav/:MovieID', passport.authenticate('jwt
 
 //----------------genre requests--------------------
 //get all genres
-app.get('/genres', passport.authenticate('jwt', {
-  session: false
-}), (req, res) => {
+app.get('/genres', function(req, res) {
   Genres.find()
     .then((genre) => {
       res.status(200).json(genre);
@@ -227,9 +225,7 @@ app.get('/genres/:Name', passport.authenticate('jwt', {
 
 //----------------director requests--------------------
 //get all directors
-app.get('/directors', passport.authenticate('jwt', {
-  session: false
-}), (req, res) => {
+app.get('/directors', function(req, res) {
   Directors.find()
     .then((director) => {
       res.status(200).json(director);
@@ -256,9 +252,7 @@ app.get('/directors/:Name', passport.authenticate('jwt', {
 
 //------------------user requests---------------
 //gett all users
-app.get('/users', passport.authenticate('jwt', {
-  session: false
-}), (req, res) => {
+app.get('/users', function(req, res) {
   Users.find()
     .then((users) => {
       res.status(201).json(users);
