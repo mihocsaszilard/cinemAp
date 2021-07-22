@@ -64,7 +64,7 @@ app.get('/', (req, res) => {
 //get all movies
 app.get('/movies', function(req, res) {
   Movies.find()
-  .populate('Genres')
+  .populate('Genre')
     .then((movies) => {
       res.status(200).json(movies);
     }).catch((err) => {
