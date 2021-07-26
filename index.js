@@ -3,7 +3,8 @@ const mongoose = require('mongoose'),
   express = require('express'),
   morgan = require('morgan'),
   path = require('path'),
-  bodyParser = require('body-parser'),
+  bodyParser = require('body-parser');
+
   app = express(),
   {
     check,
@@ -25,9 +26,6 @@ app.use(cors({
 }));
 
 
-auth = require('./auth')(app),
-  uuid = require('uuid'),
-  bcrypt = require('bcrypt');
 
 const Movies = Models.Movie;
 const Users = Models.User;
@@ -50,10 +48,12 @@ require('./passport');
 //   useUnifiedTopology: true
 // });
 
-mongoose.connect('mongodb+srv://mihocsa48:ShKyZ5r3F2W5QZQ@szilardb.edo6r.mongodb.net/cinemAppDB?retryWrites=true&w=majority', {
+mongoose.connect(process.env.CONNECTION_URI, {
   useNewUrlParser: true,
   useUnifiedTopology: true
 });
+
+const auth = require('./auth')(app);
 
 app.get('/', (req, res) => {
   const responseText = '<body style="background-color: black"><div style= "height: 90vh; width: 94vw; background: black; background: url(/img/CinemApp5.png) center center no-repeat; padding: 2%;"><h1 style= "color: white; font-weight: 100; font-family: sans-serif; text-align: center; padding-top: 15%;"> Welcome to </h1></div></body>';
