@@ -50,7 +50,7 @@ require('./passport');
 //   useUnifiedTopology: true
 // });
 
-mongoose.connect(process.env.CONNECTION_URI, {
+mongoose.connect('mongodb+srv://mihocsa48:ShKyZ5r3F2W5QZQ@szilardb.edo6r.mongodb.net/cinemAppDB?retryWrites=true&w=majority', {
   useNewUrlParser: true,
   useUnifiedTopology: true
 });
