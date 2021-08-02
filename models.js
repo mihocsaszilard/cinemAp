@@ -8,6 +8,7 @@ let movieSchema = mongoose.Schema({
   Director: [{type: mongoose.Schema.Types.ObjectId, ref: 'Director'}],
   ImgPath: String,
   Featured: Boolean,
+  Rating: Number,
   Actors: [{type: mongoose.Schema.Types.ObjectId, ref: 'Actor'}]
 });
 
@@ -37,13 +38,15 @@ let genreSchema = mongoose.Schema({
 let directorSchema = mongoose.Schema({
   Name: {type: String, required: true},
   Bio: {type: String, required: true},
-  Birthyear: Date
+  DirectorImg: String,
+  Birthyear: String
 });
 
 let actorSchema = mongoose.Schema({
   Name: {type: String, required: true},
   Bio: {type: String, required: true},
   Birthyear: Date,
+  ActorImg: String,
   Movies: [{type: mongoose.Schema.Types.ObjectId, ref: 'Movie'}]
 });
 
