@@ -13,7 +13,7 @@ const mongoose = require('mongoose'),
 
 const cors = require('cors');
 
-let allowedOrigins = ['http://localhost:8080','https://cinemapp-backend.herokuapp.com/','http://localhost:1234',];
+let allowedOrigins = ['http://localhost:8080','https://cinemapp-backend.herokuapp.com/','http://localhost:1234', 'https://mihocsaszilard-cinemapp.netlify.app/'];
 app.use(cors({
   origin: (origin, callback) => {
     if (!origin) return callback(null, true);
