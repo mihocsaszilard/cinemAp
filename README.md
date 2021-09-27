@@ -1,7 +1,10 @@
-
-
-
   <h1 class="text-center ">cinemApp Documentation</h1>
+  
+<div align="center">  
+
+https://user-images.githubusercontent.com/62619507/134966345-39c18e6c-a6b5-4885-b1a7-779c7ad1252f.mp4
+
+</div>
   
   <h2>Objective</h2>
 
