@@ -56,7 +56,7 @@ mongoose.connect(process.env.CONNECTION_URI, {
 const auth = require('./auth')(app);
 
 app.get('/', (req, res) => {
-  const responseText = '<body style="background-color: black"><div style= "height: 90vh; width: 94vw; background: black; background: url(/img/CinemApp5.png) center center no-repeat; padding: 2%;"><h1 style= "color: white; font-weight: 100; font-family: sans-serif; text-align: center; padding-top: 15%;"> Welcome to </h1></div></body>';
+  const responseText = '<body style="background-color: black"><div style= "height: 90vh; width: 94vw; background: black; background: url(/img/CinemApp5.png) center center no-repeat; padding: 2%;"><h1 style= "color: white; font-weight: 100; font-family: sans-serif; text-align: center; padding-top: 15%;"> Welcome to cinemApp backend!</h1><h2 style= "color: white; font-weight: 100; font-family: sans-serif; text-align: center; padding-top: 20%;"> Please visit <a href="https://mihocsaszilard-cinemapp.netlify.app/">the Client-side!</a><br><p style="font-size: 16px; color: silver">It may take a few seconds to load the page because Heroku puts the app to sleep after 30 minutes of inactivity. <br>This is what makes your app is slow to load. When the app\'s dyno is asleep, waking it up may take some time. But after the first load, it starts loading pretty fast because the dyno is active. </p></h2></div></body>';
   res.send(responseText);
 });
 
