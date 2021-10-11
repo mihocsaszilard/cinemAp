@@ -10,7 +10,6 @@ const mongoose = require("mongoose"),
 const cors = require("cors");
 
 let allowedOrigins = [
-  "*",
   "http://localhost:8080",
   "https://cinemapp-backend.herokuapp.com/",
   "http://localhost:1234",
@@ -72,23 +71,17 @@ app.get("/", (req, res) => {
 
 //------------------movie requests---------------
 //get all movies
-app.get(
-  "/movies",
-  passport.authenticate("jwt", {
-    session: false,
-  }),
-  function (req, res) {
-    Movies.find()
-      .populate("Genre Director Actors", "Name")
-      .then((movies) => {
-        res.status(200).json(movies);
-      })
-      .catch((err) => {
-        console.error(err);
-        res.status(500).sned("Error: " + err);
-      });
-  }
-);
+app.get("/movies", function (req, res) {
+  Movies.find()
+    .populate("Genre Director Actors", "Name")
+    .then((movies) => {
+      res.status(200).json(movies);
+    })
+    .catch((err) => {
+      console.error(err);
+      res.status(500).sned("Error: " + err);
+    });
+});
 
 //get movie by title
 app.get(
