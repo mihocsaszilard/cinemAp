@@ -486,22 +486,16 @@ app.delete(
 //--------------------Actor queries----------------
 
 //get all actors
-app.get(
-  "/actors",
-  passport.authenticate("jwt", {
-    session: false,
-  }),
-  (req, res) => {
-    Actors.find()
-      .then((actors) => {
-        res.status(200).json(actors);
-      })
-      .catch((err) => {
-        console.error(err);
-        res.status(500).sned("Error: " + err);
-      });
-  }
-);
+app.get("/actors", function (req, res) {
+  Actors.find()
+    .then((actors) => {
+      res.status(200).json(actors);
+    })
+    .catch((err) => {
+      console.error(err);
+      res.status(500).sned("Error: " + err);
+    });
+});
 
 //get actor by name
 app.get(
