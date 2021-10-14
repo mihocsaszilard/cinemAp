@@ -443,6 +443,7 @@ app.put(
           Birth: req.body.Birth,
         },
       },
+
       {
         new: true,
       }, //this line makes sure that updated document is returned
