@@ -15,7 +15,7 @@ let allowedOrigins = [
   "http://localhost:1234",
   "http://localhost:4200",
   "https://mihocsaszilard-cinemapp.netlify.app",
-  "https://mihocsaszilard.github.io/",
+  "https://mihocsaszilard.github.io/cinemApp-Angular-client/",
 ];
 
 app.use(
