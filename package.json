@@ -10,15 +10,15 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/mihocsaszilard/cinemAp.git"
+    "url": "git+https://github.com/mihocsaszilard/cinemApp.git"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/mihocsaszilard/cinemAp/issues"
+    "url": "https://github.com/mihocsaszilard/cinemApp/issues"
   },
-  "homepage": "https://github.com/mihocsaszilard/cinemAp#readme",
+  "homepage": "https://github.com/mihocsaszilard/cinemApp#readme",
   "dependencies": {
     "bcrypt": "^5.0.1",
     "bcryptjs": "^2.4.3",
