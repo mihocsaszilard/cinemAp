@@ -238,9 +238,9 @@ app.delete(
 //get all genres
 app.get(
   "/genres",
-  // passport.authenticate("jwt", {
-  //   session: false,
-  // }),
+  passport.authenticate("jwt", {
+    session: false,
+  }),
   function (req, res) {
     Genres.find()
       .then((genre) => {
