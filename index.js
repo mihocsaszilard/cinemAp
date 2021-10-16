@@ -9,6 +9,8 @@ const mongoose = require("mongoose"),
 
 const cors = require("cors");
 
+app.options("*", cors());
+
 let allowedOrigins = [
   "http://localhost:8080",
   "https://cinemapp-backend.herokuapp.com/",
